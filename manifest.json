@@ -13,8 +13,9 @@
  
     "content_scripts": [
         {
-            "matches": ["https://app.asana.com/0/*/list"],
-            "js": ["js/jquery-3.2.1.min.js", "js/asana_code_highlight.js"],
+            "matches": ["https://app.asana.com/*"],
+            "js": ["js/jquery-3.2.1.min.js", "js/asana_code_highlight.js", "js/highlight.min.js"],
+            "css": ["css/hybrid.min.css"],
             "run_at": "document_end"
         }
     ]
