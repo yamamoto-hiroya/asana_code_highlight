@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+    "name": "asana_code_highlight",
+    "version": "1.0.0",
+ 
+    "description": "asana上でコードブロックをハイライトする",
+ 
+    "icons": {
+        "16": "icons/asana_icon.png",
+        "48": "icons/asana_icon.png",
+        "128": "icons/asana_icon.png"
+    },
+ 
+    "content_scripts": [
+        {
+            "matches": ["https://app.asana.com/0/*/list"],
+            "js": ["js/jquery-3.2.1.min.js", "js/asana_code_highlight.js"],
+            "run_at": "document_end"
+        }
+    ]
+}
