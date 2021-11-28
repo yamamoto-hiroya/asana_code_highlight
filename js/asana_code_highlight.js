@@ -23,18 +23,16 @@ $(function(){
     }
 
     /** ----- main ----- **/
-    // タスク説明文があればハイライトする
+    // APPEND: タスク本文以外（コメント欄やメッセージ欄など）にも適用できると嬉しいかも
+    // タスク説明文が表示状態で存在していればハイライトする
     var task_description = $(".TaskDescription");
-    if(task_description.find(".ProsemirrorEditor").length !== 0){
+    if(task_description.is(':visible')){
       console.log('タスク本文要素を発見したのでハイライト欄に切り替えます。');
-      // 元の子要素をhtmlごと保持しておく
-      // 別のスコープで使うのでvarをつけずにグローバル変数となっている
-      original_task_description_html = $(".TaskDescription").children().clone(true);
 
       var task_description_body = task_description.find(".ProsemirrorEditor").html();
       var highlight_block = "<pre><code id='highlight'></code></pre>";
-      task_description.empty();
-      task_description.append(highlight_block);
+      task_description.hide();
+      task_description.after(highlight_block);
       // textで入れると改行されないのでhtmlごと入れる
       $('#highlight').html(task_description_body);
 
@@ -45,10 +43,9 @@ $(function(){
 
     // ハイライト欄があれば元に戻す
     } else if($("#highlight").length !== 0) {
-      // TODO: イベントも含めて元に戻したつもりだが、元に戻すと保存が効かなくなるっぽい
       console.log('ハイライト欄を発見したので元の要素に切り替えます。');
-      task_description.empty();
-      task_description.html(original_task_description_html);
+      $('#highlight').remove();
+      task_description.show();
 
     // 対象の要素がなければ何もしない
     } else {
