@@ -23,10 +23,6 @@ $(function(){
     }
 
     /** ----- main ----- **/
-    // TODO: 改行情報も保持したい
-    // TODO: ```php aaa```みたいな構文に対応したい
-    // TODO: autoがあるっぽい？あるなら嬉しい
-
     // タスク説明文があればハイライトする
     var task_description = $(".TaskDescription");
     if(task_description.find(".ProsemirrorEditor").length !== 0){
@@ -34,13 +30,11 @@ $(function(){
       // 元の要素を保持しておく
       task_description_html = $(".TaskDescription").children().clone(true);
 
-      var task_description_text = task_description.text();
-      var highlight_block = "<pre><code class='sql' id='highlight'></code></pre>";
-      var highlight_block = "<pre><code class='php' id='highlight'></code></pre>";
-      var highlight_block = "<pre><code class='sh' id='highlight'></code></pre>";
+      var task_description_text = task_description.find(".ProsemirrorEditor").html();
+      var highlight_block = "<pre><code id='highlight'></code></pre>";
       task_description.empty();
       task_description.append(highlight_block);
-      $('#highlight').text(task_description_text);
+      $('#highlight').html(task_description_text);
 
       // ハイライト処理
       $('#highlight').each(function(i, block) {
