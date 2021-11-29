@@ -33,14 +33,31 @@ $(function(){
       console.log('タスク本文要素を発見したのでハイライト欄に切り替えます。');
 
       var task_description_body = task_description.find(".ProsemirrorEditor").html();
-      var highlight_block = "<pre><code id='highlight'></code></pre>";
+      var highlight_block = "<div id='highlight'></div>";
       task_description.hide();
       task_description.after(highlight_block);
+
+      /**
+       * ```で囲まれている部分を置換しハイライトする
+       * ```で囲まれている部分がなくなるまで無限ループする
+       */
+      while(task_description_body.match(/```(.*?)```/)){
+        task_description_body = task_description_body.replace(/```php(.*?)```/g, "<pre><code class='highlight php'>$1</code></pre>")
+        task_description_body = task_description_body.replace(/```ruby(.*?)```/g, "<pre><code class='highlight ruby'>$1</code></pre>")
+        task_description_body = task_description_body.replace(/```sql(.*?)```/g, "<pre><code class='highlight sql'>$1</code></pre>")
+        task_description_body = task_description_body.replace(/```js(.*?)```/g, "<pre><code class='highlight js'>$1</code></pre>")
+        task_description_body = task_description_body.replace(/```sh(.*?)```/g, "<pre><code class='highlight sh'>$1</code></pre>")
+        task_description_body = task_description_body.replace(/```html(.*?)```/g, "<pre><code class='highlight html'>$1</code></pre>")
+        task_description_body = task_description_body.replace(/```css(.*?)```/g, "<pre><code class='highlight css'>$1</code></pre>")
+        task_description_body = task_description_body.replace(/```go(.*?)```/g, "<pre><code class='highlight go'>$1</code></pre>")
+        task_description_body = task_description_body.replace(/```py(.*?)```/g, "<pre><code class='highlight py'>$1</code></pre>")
+        task_description_body = task_description_body.replace(/```(.*?)```/g, "<pre><code class='highlight'>$1</code></pre>")
+      }
+
       // textで入れると改行されないのでhtmlごと入れる
       $('#highlight').html(task_description_body);
-
       // ハイライト処理
-      $('#highlight').each(function(i, block) {
+      $('.highlight').each(function(i, block) {
         hljs.highlightBlock(block);
       });
 
