@@ -39,9 +39,8 @@ $(function(){
 
       /**
        * ```で囲まれている部分を置換しハイライトする
-       * ```で囲まれている部分がなくなるまで無限ループする
        */
-      while(task_description_body.match(/```(.*?)```/)){
+      if(task_description_body.match(/```(.*?)```/)){
         task_description_body = task_description_body.replace(/```php(.*?)```/g, "<pre><code class='highlight php'>$1</code></pre>")
         task_description_body = task_description_body.replace(/```ruby(.*?)```/g, "<pre><code class='highlight ruby'>$1</code></pre>")
         task_description_body = task_description_body.replace(/```sql(.*?)```/g, "<pre><code class='highlight sql'>$1</code></pre>")
